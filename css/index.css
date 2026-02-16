@@ -1,3 +1,8 @@
 * {
     font-family: "Google Sans", sans-serif;
 }
+
+.active {
+    background: #2d15b1;
+    color: white;
+}
