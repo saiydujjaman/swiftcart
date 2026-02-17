@@ -86,8 +86,8 @@ const displayAllProducts = (products) => {
 
                         <!-- Buttons -->
                         <div class="flex gap-4 mt-4">
-                            <button class="btn btn-outline flex-1">
-                                <i class="fa-solid fa-eye"></i> Details
+                            <button class="btn btn-outline flex-1" onClick="productDetails(${product.id})">
+                                <i class="fa-solid fa-eye" ></i> Details
                             </button>
                             <button class="btn btn-primary flex-1">
                                 <i class="fa-solid fa-cart-shopping"></i> Add
@@ -102,6 +102,66 @@ const displayAllProducts = (products) => {
     })
 
 
+}
+
+// product details in pop up
+const productDetails = (id) => {
+    fetch(`https://fakestoreapi.com/products/${id}`)
+        .then(res => res.json())
+        .then(product => showModal(product))
+}
+
+// display modal
+const showModal = (product) => {
+    const allProduct = document.getElementById('my_modal_5')
+    allProduct.innerHTML = " "
+    const productDiv = document.createElement('div')
+    productDiv.innerHTML = `
+        <div class="card bg-base-100 shadow-md border">
+<form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+                    <!-- Image -->
+                    <figure class="bg-gray-100 p-10 h-64">
+                        <img src=${product.image} class="w-52 h-full object-contain" />
+                    </figure>
+
+                    <div class="card-body">
+
+                        <!-- Category + Rating -->
+                        <div class="flex justify-between items-center">
+                            <span class="badge badge-primary badge-outline">
+                               ${product.category}
+                            </span>
+
+                            <div class="flex items-center gap-1 text-sm text-gray-500">
+                                <i class="fa-solid fa-star text-warning"></i> 
+                                <button class="btn">${product.rating.rate}</button>
+                                <button class="btn">${product.rating.count}</button>
+                            </div>
+                        </div>
+
+                        <!-- Title -->
+                        <h3 class="font-semibold text-lg">
+                            ${product.title}
+                        </h3>
+
+                        <!-- Price -->
+                        <p class="text-xl font-bold">$${product.price}</p>
+
+                        <!-- Buttons -->
+                        <div class="flex gap-4 mt-4">
+                            
+                            <button class="btn btn-primary flex-1">
+                                <i class="fa-solid fa-cart-shopping"></i> Add
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+        `
+    allProduct.append(productDiv)
+    document.getElementById("my_modal_5").showModal()
 }
 
 allProduct()
